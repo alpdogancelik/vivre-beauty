@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+/* Nude tema + tipografi */
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #faf7f2;
+  color: #1c1917;
+  font-family: Outfit, ui-sans-serif, system-ui;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Prata", serif;
+  letter-spacing: -.01em;
+}
