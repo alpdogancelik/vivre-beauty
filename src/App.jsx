@@ -9,6 +9,7 @@ import { SECTIONS } from "./constants/sections.jsx";
 import { PROJECTS } from "./constants/projects.jsx";
 import SkinAI from "./components/SkinAI.jsx";
 import MakeupTryOn from "./components/MakeupTryOn.jsx";
+import Booking from "./components/Booking.jsx";
 
 
 export default function App() {
@@ -139,14 +140,12 @@ export default function App() {
 
                   {/* Randevu */}
                   <div className="rounded-2xl border border-stone-200 p-6">
-                    <h3 className="text-lg font-medium">Randevu</h3>
-                    <p className="text-sm text-stone-500">Takvim entegrasyonu ve çevrimiçi randevu için yer.</p>
-                    <button
-                      id="contacto-booking"
-                      className="mt-4 px-4 py-2 rounded-xl bg-stone-900 text-stone-50 text-sm font-medium"
-                    >
-                      Talep Gönder
-                    </button>
+                    <h3 className="text-lg font-medium mb-2">Randevu</h3>
+                    <p className="text-sm text-stone-500 mb-4">
+                      Aşağıdaki form ile hizmet, tarih ve personel seçiminizi yaparak
+                      randevu talebi oluşturabilirsiniz.
+                    </p>
+                    <Booking />
                   </div>
 
                   {/* Sosyal */}

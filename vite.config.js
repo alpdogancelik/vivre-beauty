@@ -6,8 +6,9 @@ export default defineConfig({
   resolve: {
     alias: {
       "@/components": "/src/components",
-      "@/components/ui": "/src/components/ui.jsx"
-    }
-    ,
+      "@/components/ui": "/src/components/ui.jsx",
+    },
   },
+
+
 });
