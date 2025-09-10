@@ -7,8 +7,9 @@ import WorkList from "./components/worklist.jsx";
 import LandingVideo from "./components/landing-video.jsx";
 import { SECTIONS } from "./constants/sections.jsx";
 import { PROJECTS } from "./constants/projects.jsx";
-import SkinAI from "./components/skinai.jsx";
-import Booking from "./components/booking.jsx";
+import SkinAI from "./components/SkinAI.jsx";
+import Booking from "./components/Booking.jsx";
+import MakeupTryOn from "./components/makeuptryon.jsx";
 
 
 export default function App() {
