@@ -31,7 +31,7 @@ const PRESETS = [
     { name: "Bare", lip: "rgba(120,80,70,0.22)", eyeliner: "rgba(12,12,12,0.8)", blush: "rgba(210,120,120,0.12)" },
 ];
 
-export default function MakeupTryOn() {
+export default function makeuptryon() {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const [ready, setReady] = useState(false);
