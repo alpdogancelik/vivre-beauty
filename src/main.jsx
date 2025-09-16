@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 
 import "./index.css"; // Tailwind directifleri
-import App from "./App.jsx";
+import App from "./AppTest.jsx";
 
 const root = createRoot(document.getElementById("root"));
 
@@ -10,7 +10,7 @@ const root = createRoot(document.getElementById("root"));
 document.documentElement.classList.add("theme-nude");
 
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  // <React.StrictMode>
+  <App />
+  // </React.StrictMode>
 );

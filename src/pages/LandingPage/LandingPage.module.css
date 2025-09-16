@@ -1,0 +1,222 @@
+/* ...existing code... */
+
+/* Grids */
+.sectionGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+@media (max-width: 1024px) {
+    .sectionGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .sectionGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.projectGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+}
+
+@media (max-width: 1024px) {
+    .projectGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .projectGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    filter: blur(2px);
+    transition: opacity .6s ease, transform .6s cubic-bezier(.2, .65, .2, 1), filter .6s ease;
+}
+
+.visible {
+    opacity: 1;
+    transform: none;
+    filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        transition: none;
+        opacity: 1;
+        transform: none;
+        filter: none;
+    }
+}
+
+/* Section cards */
+.card {
+    --h: 24;
+    position: relative;
+    border-radius: 14px;
+    border: 1px solid hsl(var(--h) 20% 85% / 0.9);
+    background: linear-gradient(180deg, hsl(var(--h) 65% 98%), #fff);
+    box-shadow: 0 1px 0 hsl(var(--h) 20% 80% / 0.6) inset, 0 8px 24px hsl(var(--h) 25% 40% / 0.06);
+    overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    border-color: hsl(var(--h) 50% 70% / 1);
+    box-shadow: 0 1px 0 hsl(var(--h) 40% 75% / 0.7) inset, 0 16px 40px hsl(var(--h) 40% 40% / 0.12);
+}
+
+.cardBody {
+    padding: 18px 18px 20px;
+}
+
+.cardTitle {
+    font-weight: 600;
+    color: #171717;
+    margin: 2px 0 6px;
+}
+
+.cardBlurb {
+    color: #525252;
+    font-size: 0.95rem;
+    line-height: 1.45;
+}
+
+.cardCta {
+    margin-top: 12px;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    color: #111;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.cardCta::after {
+    content: "→";
+    transition: transform .2s ease;
+}
+
+.card:hover .cardCta::after {
+    transform: translateX(2px);
+}
+
+/* Project cards */
+.projectCard {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #e7e5e4;
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.projectCard:hover {
+    transform: translateY(-6px);
+    border-color: #d6d3d1;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
+}
+
+.projectMedia {
+    aspect-ratio: 16/10;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(1.02);
+    transition: transform .4s ease;
+}
+
+.projectCard:hover .projectMedia {
+    transform: scale(1.03);
+}
+
+.projectBody {
+    padding: 14px 14px 16px;
+}
+
+.projectTitle {
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 4px;
+}
+
+.projectMeta {
+    font-size: 0.82rem;
+    color: #6b7280;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Accent chip and KPI */
+.chip {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--accent, #e5e5e5);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset;
+    flex: 0 0 auto;
+}
+
+.metaRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.kpiRight {
+    margin-left: auto;
+    color: #6b7280;
+    font-size: 0.82rem;
+    white-space: nowrap;
+}
+
+/* Hover preview inside the card */
+.hoverPreview {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 160px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease, transform .3s ease;
+}
+
+.projectCard:hover .hoverPreview {
+    opacity: 1;
+}
+
+/* Tiny stagger */
+.stagger>* {
+    transition-delay: 0ms;
+}
+
+.stagger>*:nth-child(2) {
+    transition-delay: 60ms;
+}
+
+.stagger>*:nth-child(3) {
+    transition-delay: 120ms;
+}
+
+.stagger>*:nth-child(4) {
+    transition-delay: 180ms;
+}
+
+/* ...existing code... */

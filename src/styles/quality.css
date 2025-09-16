@@ -1,0 +1,120 @@
+body.quality-upscale {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern", "liga", "clig", "calt";
+}
+
+.logo-smooth {
+    image-rendering: auto;
+    -webkit-filter: drop-shadow(0 0 0 transparent);
+}
+
+.heading-smooth {
+    letter-spacing: -0.015em;
+}
+
+.section-shell {
+    /* İnce hairline + hafif iç parıltı */
+    position: relative;
+    padding-top: 1px;
+}
+
+.section-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.08) 0%,
+            rgba(0, 0, 0, 0) 12% 88%,
+            rgba(0, 0, 0, 0.06) 100%);
+    mix-blend-mode: multiply;
+    opacity: .65;
+}
+
+.section-shell::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mask: radial-gradient(circle at 50% 35%, rgba(0, 0, 0, .9), rgba(0, 0, 0, 0) 75%);
+    background:
+        radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 60%);
+    opacity: .4;
+}
+
+.fx-dot {
+    position: absolute;
+    border-radius: 999px;
+    --glow: rgba(255, 255, 255, 0.65);
+    background:
+        radial-gradient(circle at 35% 35%, var(--glow) 0%, rgba(255, 255, 255, 0.15) 25%, rgba(255, 255, 255, 0) 70%),
+        radial-gradient(circle at 70% 65%, rgba(255, 180, 150, 0.45), rgba(255, 180, 150, 0) 70%);
+    backdrop-filter: blur(2px) saturate(1.2);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08)) brightness(1.05);
+    animation: floatY 14s ease-in-out infinite, floatX 18s linear infinite;
+    will-change: transform;
+}
+
+.dot-xxs {
+    width: 6px;
+    height: 6px;
+}
+
+.dot-xs {
+    width: 10px;
+    height: 10px;
+}
+
+.dot-sm {
+    width: 14px;
+    height: 14px;
+}
+
+.dot-md {
+    width: 20px;
+    height: 20px;
+}
+
+.dot-lg {
+    width: 28px;
+    height: 28px;
+}
+
+@keyframes floatY {
+
+    0%,
+    100% {
+        transform: translateY(-4px);
+    }
+
+    50% {
+        transform: translateY(6px);
+    }
+}
+
+@keyframes floatX {
+    0% {
+        translate: 0 0;
+    }
+
+    50% {
+        translate: 4px 0;
+    }
+
+    100% {
+        translate: 0 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .fx-dot {
+        animation-duration: 18s, 24s;
+        opacity: .55;
+    }
+
+    .section-shell::after {
+        opacity: .25;
+    }
+}
