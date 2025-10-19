@@ -1,1 +1,53 @@
-/* Hero scoped styles (optional). You can use Tailwind with @apply here. */
+/* Hero.module.css – scoped styles for the Hero section */
+@reference "tailwindcss";
+
+.wrapper {
+    view-transition-name: hero-section;
+}
+
+/* shimmering gradient text on slide titles */
+.shinyText {
+    @apply bg-gradient-to-r from-rose-400 via-amber-300 to-rose-400 bg-clip-text text-transparent;
+    background-size: 200% auto;
+    animation: shine 4s linear infinite;
+    animation-composition: add;
+    /* stacks safely with GSAP transforms */
+}
+
+@keyframes shine {
+    from {
+        background-position: 200% center;
+    }
+
+    to {
+        background-position: -200% center;
+    }
+}
+
+/* global grain overlay (declared here for convenience) */
+:global(.grain) {
+    @apply absolute inset-0 pointer-events-none mix-blend-overlay opacity-10;
+    background-image: url('/noise.png');
+    /* replace with your own asset */
+    background-size: 300px 300px;
+    animation: grainShift 12s steps(10) infinite;
+}
+
+@keyframes grainShift {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(-300px, -300px);
+    }
+}
+
+/* reduce-motion safety */
+@media (prefers-reduced-motion: reduce) {
+
+    .shinyText,
+    :global(.grain) {
+        animation: none !important;
+    }
+}

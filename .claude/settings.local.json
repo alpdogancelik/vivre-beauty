@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(for dir in src/features/Background src/features/HeroWithScroll src/shared/ui)",
+      "Bash(do if [ -d \"$dir\" ])",
+      "Bash(then ls \"$dir\")",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(git checkout:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

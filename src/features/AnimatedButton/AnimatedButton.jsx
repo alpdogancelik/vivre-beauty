@@ -8,12 +8,15 @@ const AnimatedButton = ({
 	className = '',
 	onClick,
 	href,
+	plain = false,
 	...props
 }) => {
 	const buttonRef = useRef(null);
 	const flairRef = useRef(null);
 
 	useEffect(() => {
+		if (plain) return; // no flair or mouse animations when plain mode is requested
+
 		const buttonElement = buttonRef.current;
 		const flairElement = flairRef.current;
 
@@ -88,7 +91,7 @@ const AnimatedButton = ({
 			buttonElement.removeEventListener("mouseleave", handleMouseLeave);
 			buttonElement.removeEventListener("mousemove", handleMouseMove);
 		};
-	}, []);
+	}, [plain]);
 
 	const Component = href ? 'a' : 'button';
 	const componentProps = href ? { href, ...props } : { onClick, ...props };
@@ -96,10 +99,10 @@ const AnimatedButton = ({
 	return (
 		<Component
 			ref={buttonRef}
-			className={`animated-button animated-button--${variant} ${className}`}
+			className={`animated-button animated-button--${variant}${plain ? ' animated-button--plain' : ''} ${className}`.trim()}
 			{...componentProps}
 		>
-			<span ref={flairRef} className="animated-button__flair"></span>
+			{!plain && <span ref={flairRef} className="animated-button__flair"></span>}
 			<span className="animated-button__label">{children}</span>
 		</Component>
 	);

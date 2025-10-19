@@ -8,7 +8,7 @@ import {
 	CardHeader,
 	CardTitle,
 	Slider,
-} from "@/components/ui";
+} from "@/components/ui.jsx";
 import { Camera, Download, RotateCcw, Palette } from "lucide-react";
 import AnimatedButton from '@features/AnimatedButton/AnimatedButton.jsx';
 

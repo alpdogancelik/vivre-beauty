@@ -30,29 +30,43 @@ export default function Sidebar({ sections, active, onNav, open = false, onClose
 						Kapat
 					</button>
 
-					<div className="p-6">
-						<div className="flex items-center space-x-2 mb-2">
-							<img src="/vivre-logo-real.png" alt="Vivre Beauty" className="h-12 w-auto" />
-						</div>
-						<div className="text-xs text-stone-600 ml-1">Beauty Studio</div>
+					<div className="p-6 pb-4">
+						<button
+							onClick={() => { onNav(sections[0]?.id || 'home'); onClose(); window.history.pushState({}, '', '/'); }}
+							className="group flex items-center space-x-3 mb-3 px-3 py-2 rounded-lg border border-transparent hover:border-rose-200/60 hover:bg-rose-100/50 transition"
+							aria-label="Anasayfa"
+						>
+							<img src="/vivre-logo-real.png" alt="Vivre Beauty" className="h-8 w-auto transition group-hover:scale-[1.05]" />
+							<span className="text-sm font-medium tracking-wide text-stone-700 group-hover:text-stone-900">Home</span>
+						</button>
+						<div className="text-[10px] uppercase tracking-wider text-stone-500 ml-1">Navigation</div>
 					</div>
 
 					<div className="flex-1 px-6 overflow-y-auto">
-						<ul className="space-y-1">
+						<ul className="space-y-1 mt-2">
 							{sections.map((section) => (
 								<li key={section.id}>
 									<button
 										onClick={() => { onNav(section.id); onClose(); }}
-										className={`w-full text-left px-4 py-3 rounded-lg text-sm transition-all duration-300 ${active === section.id
-												? "bg-rose-200/60 text-stone-800 font-medium backdrop-blur-sm shadow-sm"
-												: "text-stone-600 hover:bg-rose-100/50 hover:text-stone-800"
-											}`}
+										className={`w-full text-left px-4 py-2.5 rounded-lg text-sm tracking-wide transition-colors ${active === section.id
+											? "bg-rose-200/70 text-stone-900 font-medium shadow-sm ring-1 ring-white/40 backdrop-blur"
+											: "text-stone-600 hover:bg-rose-100/60 hover:text-stone-900"}`}
 									>
-										<span className="text-xs opacity-50 mr-3">{section.no}</span>
+										<span className="text-[10px] opacity-50 mr-3 font-mono">{section.no}</span>
 										{section.title}
 									</button>
 								</li>
 							))}
+							{/* Reservation sekmesi */}
+							<li>
+								<button
+									onClick={() => { onNav('reservation'); onClose(); document.getElementById('reservation')?.scrollIntoView({ behavior: 'smooth' }); }}
+									className="w-full text-left px-4 py-2.5 rounded-lg text-sm tracking-wide transition-colors text-stone-600 hover:bg-rose-100/60 hover:text-stone-900"
+								>
+									<span className="text-[10px] opacity-50 mr-3 font-mono">R</span>
+									Randevu
+								</button>
+							</li>
 						</ul>
 					</div>
 

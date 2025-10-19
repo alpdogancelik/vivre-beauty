@@ -1,1 +1,52 @@
-/* LandingVideo scoped styles (optional). You can use Tailwind with @apply here. */
+/* LandingVideo.module.css
+   Modern CSS animations + Tailwind @apply
+   (Tailwind content paths bu dosyayı tarayacak şekilde güncel olmalı)
+*/
+
+.wrapper {
+    /* View-Transition API → sayfaya geçerken cross-fade hazır */
+    view-transition-name: landing-video;
+}
+
+/* Video: hafif zoom-in + opacity; 10 s’lik klip bitene kadar frame’i tut */
+.video {
+    opacity: 0;
+    transform: scale(.96);
+    animation:
+        fade-scale-in 1200ms cubic-bezier(.25, .8, .5, 1) forwards,
+        hold-end 1ms 10s forwards;
+    /* GSAP / ekstra transformlar için additive compositing */
+    animation-composition: add;
+}
+
+@keyframes fade-scale-in {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* CTA: yumuşak pulse – hover + GSAP ile çakışmaz */
+.cta {
+    animation: pulse 1.4s ease-in-out infinite alternate;
+    animation-composition: add;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.08);
+    }
+}
+
+/* Erişilebilirlik – hareketi azalt */
+@media (prefers-reduced-motion: reduce) {
+
+    .video,
+    .cta {
+        animation: none !important;
+    }
+}

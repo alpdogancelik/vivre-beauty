@@ -51,6 +51,15 @@
     color: var(--color-just-black, #57534e);
 }
 
+/* Plain variant helper lets external classes control visuals */
+.animated-button--plain {
+    color: inherit !important;
+}
+
+.animated-button--plain::after {
+    display: none;
+}
+
 @media (hover: hover) {
     .animated-button--filled:hover {
         color: var(--color-surface-white, #ffffff);

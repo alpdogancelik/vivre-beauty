@@ -1,1 +1,37 @@
-/* LogoEntrance scoped styles (optional). You can use Tailwind with @apply here. */
+/* LogoEntrance.module.css */
+
+/* enable future View-Transition API cross-fade */
+.wrapper {
+    view-transition-name: logo-splash;
+}
+
+/* subtle diagonal shimmer that stacks with GSAP thanks to animation-composition */
+.shimmer {
+    background: linear-gradient(120deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.15) 45%,
+            rgba(255, 255, 255, 0.25) 50%,
+            rgba(255, 255, 255, 0.15) 55%,
+            transparent 100%);
+    background-repeat: no-repeat;
+    background-size: 200% 100%;
+    animation: shimmer-slide 2.8s linear infinite;
+    animation-composition: add;
+}
+
+@keyframes shimmer-slide {
+    from {
+        background-position: 200% 0;
+    }
+
+    to {
+        background-position: -200% 0;
+    }
+}
+
+/* accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .shimmer {
+        animation: none !important;
+    }
+}

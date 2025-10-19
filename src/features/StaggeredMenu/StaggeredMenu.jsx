@@ -1,6 +1,6 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import GooeyNav from '@features/GooeyNav/GooeyNav.jsx';
+// GooeyNav removed
 
 export const StaggeredMenu = ({
   position = 'right',
@@ -15,6 +15,7 @@ export const StaggeredMenu = ({
   openMenuButtonColor = '#fff',
   changeMenuColorOnOpen = true,
   accentColor = '#b627aaff',
+  showTopNav = true,
   onMenuOpen,
   onMenuClose
 }) => {
@@ -31,7 +32,7 @@ export const StaggeredMenu = ({
 
   const textInnerRef = useRef(null);
   const textWrapRef = useRef(null);
-  const [textLines, setTextLines] = useState(['Menu', 'Close']);
+  const [textLines, setTextLines] = useState(['Menu']); // always show 'Menu'
 
   const openTlRef = useRef(null);
   const closeTweenRef = useRef(null);
@@ -51,14 +52,14 @@ export const StaggeredMenu = ({
     if (n.includes('instagram')) {
       return (
         <svg {...commonProps}>
-          <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7zM17.5 6a1 1 0 1 1 0 2a1 1 0 0 1 0-2z"/>
+          <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7zM17.5 6a1 1 0 1 1 0 2a1 1 0 0 1 0-2z" />
         </svg>
       );
     }
     if (n.includes('twitter') || n === 'x') {
       return (
         <svg {...commonProps}>
-          <path d="M3 3h4.2l5 6.6L17.5 3H21l-7.3 9.5L21.5 21H17l-5.4-7.1L6.5 21H3l7.7-10L3 3z"/>
+          <path d="M3 3h4.2l5 6.6L17.5 3H21l-7.3 9.5L21.5 21H17l-5.4-7.1L6.5 21H3l7.7-10L3 3z" />
         </svg>
       );
     }
@@ -281,36 +282,13 @@ export const StaggeredMenu = ({
     }
   }, [changeMenuColorOnOpen, menuButtonColor, openMenuButtonColor]);
 
-  const animateText = useCallback(opening => {
+  const animateText = useCallback(() => {
+    // disabled dynamic cycling; keep 'Menu'
     const inner = textInnerRef.current;
     if (!inner) return;
-
     textCycleAnimRef.current?.kill();
-
-    const currentLabel = opening ? 'Menu' : 'Close';
-    const targetLabel = opening ? 'Close' : 'Menu';
-    const cycles = 3;
-
-    const seq = [currentLabel];
-    let last = currentLabel;
-    for (let i = 0; i < cycles; i++) {
-      last = last === 'Menu' ? 'Close' : 'Menu';
-      seq.push(last);
-    }
-    if (last !== targetLabel) seq.push(targetLabel);
-    seq.push(targetLabel);
-
-    setTextLines(seq);
+    setTextLines(['Menu']);
     gsap.set(inner, { yPercent: 0 });
-
-    const lineCount = seq.length;
-    const finalShift = ((lineCount - 1) / lineCount) * 100;
-
-    textCycleAnimRef.current = gsap.to(inner, {
-      yPercent: -finalShift,
-      duration: 0.5 + lineCount * 0.07,
-      ease: 'power4.out'
-    });
   }, []);
 
   const toggleMenu = useCallback(() => {
@@ -331,6 +309,19 @@ export const StaggeredMenu = ({
     animateText(target);
   }, [playOpen, playClose, animateIcon, animateColor, animateText, onMenuOpen, onMenuClose]);
 
+  // Lock background scroll when menu is open
+  React.useEffect(() => {
+    if (open) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+    // ensure cleanup when closing without open=true cleanup
+    return undefined;
+  }, [open]);
+
   return (
     <div className="sm-scope w-full h-full">
       <div
@@ -341,7 +332,7 @@ export const StaggeredMenu = ({
       >
         <div
           ref={preLayersRef}
-          className="sm-prelayers absolute top-0 right-0 bottom-0 pointer-events-none z-[5]"
+          className="sm-prelayers absolute inset-0 pointer-events-none z-[5]"
           aria-hidden="true"
         >
           {(() => {
@@ -376,43 +367,34 @@ export const StaggeredMenu = ({
               decoding="async"
             />
           </div>
-          {/* Centered GooeyNav */}
-          <div className="pointer-events-auto absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 max-w-[62vw] 2xl:max-w-[58vw] flex justify-center">
-            <div className="w-full">
-              <GooeyNav items={(items || []).map(it => ({ label: it.label, href: it.link }))} />
-            </div>
-          </div>
+          {/* Top center nav removed */}
 
           {/* Right: Toggle button */}
           <div className="pointer-events-auto">
             <button
               ref={toggleBtnRef}
               onClick={toggleMenu}
-              className="sm-toggle relative inline-flex items-center gap-[0.6rem] bg-black text-white border border-black rounded-full px-5 py-2.5 cursor-pointer font-semibold leading-none overflow-visible shadow-sm hover:shadow transition-shadow"
+              className="sm-toggle relative inline-flex items-center justify-center bg-transparent border-none px-0 py-0 cursor-pointer leading-none overflow-visible shadow-none hover:shadow-none"
             >
-              <span className="sm-toggle-textWrap relative inline-block h-[1em] overflow-hidden whitespace-nowrap w-[var(--sm-toggle-width,auto)] min-w-[var(--sm-toggle-width,auto)]">
-                <span ref={textInnerRef} className="sm-toggle-textInner flex flex-col leading-none">
+              <span className="sm-toggle-textWrap sr-only">
+                <span ref={textInnerRef} className="sm-toggle-textInner">
                   {textLines.map((l, i) => (
-                    <span className="sm-toggle-line block h-[1em] leading-none" key={i}>
+                    <span className="sm-toggle-line" key={i}>
                       {l}
                     </span>
                   ))}
                 </span>
               </span>
-              <span
-                ref={iconRef}
-                className="sm-icon relative w-[14px] h-[14px] shrink-0 inline-flex items-center justify-center [will-change:transform]"
-                aria-hidden="true"
-              >
-                <span
-                  ref={plusHRef}
-                  className="sm-icon-line absolute left-1/2 top-1/2 w-full h-[2px] bg-current rounded-[2px] -translate-x-1/2 -translate-y-1/2 [will-change:transform]"
-                />
-                <span
-                  ref={plusVRef}
-                  className="sm-icon-line sm-icon-line-v absolute left-1/2 top-1/2 w-full h-[2px] bg-current rounded-[2px] -translate-x-1/2 -translate-y-1/2 [will-change:transform]"
-                />
+              <span ref={iconRef} aria-hidden="true" className="hidden">
+                <span ref={plusHRef} className="hidden" />
+                <span ref={plusVRef} className="hidden" />
               </span>
+              <img
+                src="/menubutton.png"
+                alt="Menü"
+                className="block h-53 w-auto pointer-events-none select-none"
+                draggable={false}
+              />
             </button>
           </div>
         </header>
@@ -420,21 +402,21 @@ export const StaggeredMenu = ({
         <aside
           id="staggered-menu-panel"
           ref={panelRef}
-          className="staggered-menu-panel absolute top-0 right-0 h-full bg-white flex flex-col p-[6em_2em_2em_2em] overflow-y-auto z-10 backdrop-blur-[12px] pointer-events-auto"
+          className="staggered-menu-panel absolute inset-0 h-full w-full bg-white text-black flex flex-col p-[6em_2em_2em_2em] overflow-y-auto z-10 backdrop-blur-[12px] pointer-events-auto"
           style={{ WebkitBackdropFilter: 'blur(12px)' }}
           aria-hidden={!open}
         >
-          <div className="sm-panel-inner flex-1 flex flex-col gap-5">
+          <div className="sm-panel-inner flex-1 flex flex-col gap-5 ml-auto w-full md:w-[40vw] lg:w-[34vw] xl:w-[30vw] max-w-[760px] pr-6 md:pr-10">
             <ul
-              className="sm-panel-list list-none m-0 p-0 flex flex-col gap-2"
+              className="sm-panel-list list-none m-0 p-0 flex flex-col gap-2 items-end text-black"
               role="list"
               data-numbering={displayItemNumbering || undefined}
             >
               {items && items.length ? (
-                items.map((it, idx) => (
+                [{ label: 'Home', link: '#home' }, ...items].map((it, idx) => (
                   <li className="sm-panel-itemWrap relative overflow-hidden leading-none" key={it.label + idx}>
                     <a
-                      className="sm-panel-item relative text-black font-semibold text-[4rem] cursor-pointer leading-none tracking-[-2px] uppercase transition-[background,color] duration-150 ease-linear inline-block no-underline pr-[1.4em]"
+                      className="sm-panel-item relative text-black font-semibold text-[4rem] cursor-pointer leading-none tracking-[-2px] uppercase transition-[background,color] duration-150 ease-linear inline-block no-underline pr-2 md:pr-4 text-right"
                       href={it.link}
                       aria-label={it.ariaLabel}
                       data-index={idx + 1}
@@ -459,7 +441,7 @@ export const StaggeredMenu = ({
                         } catch { /* no-op */ }
                       }}
                     >
-                      <span className="sm-panel-itemLabel inline-block [transform-origin:50%_100%] will-change-transform">
+                      <span className="sm-panel-itemLabel inline-block [transform-origin:50%_100%] will-change-transform text-right">
                         {it.label}
                       </span>
                     </a>
@@ -467,8 +449,8 @@ export const StaggeredMenu = ({
                 ))
               ) : (
                 <li className="sm-panel-itemWrap relative overflow-hidden leading-none" aria-hidden="true">
-                  <span className="sm-panel-item relative text-black font-semibold text-[4rem] cursor-pointer leading-none tracking-[-2px] uppercase transition-[background,color] duration-150 ease-linear inline-block no-underline pr-[1.4em]">
-                    <span className="sm-panel-itemLabel inline-block [transform-origin:50%_100%] will-change-transform">
+                  <span className="sm-panel-item relative text-black font-semibold text-[4rem] cursor-pointer leading-none tracking-[-2px] uppercase transition-[background,color] duration-150 ease-linear inline-block no-underline pr-2 md:pr-4 text-right">
+                    <span className="sm-panel-itemLabel inline-block [transform-origin:50%_100%] will-change-transform text-right">
                       No items
                     </span>
                   </span>
@@ -477,10 +459,10 @@ export const StaggeredMenu = ({
             </ul>
 
             {displaySocials && socialItems && socialItems.length > 0 && (
-              <div className="sm-socials mt-auto pt-8 flex flex-col gap-3" aria-label="Social links">
-                <h3 className="sm-socials-title m-0 text-base font-medium [color:var(--sm-accent,#ff0000)]">Socials</h3>
+              <div className="sm-socials mt-auto pt-8 flex flex-col gap-3 items-end w-full text-black" aria-label="Social links">
+                <h3 className="sm-socials-title m-0 text-base font-medium [color:var(--sm-accent,#ff0000)] text-right w-full max-w-[inherit]">Socials</h3>
                 <ul
-                  className="sm-socials-list list-none m-0 p-0 flex flex-row items-center gap-4 flex-wrap"
+                  className="sm-socials-list list-none m-0 p-0 flex flex-row items-center justify-end gap-4 flex-wrap w-full text-black"
                   role="list"
                 >
                   {socialItems.map((s, i) => (
@@ -503,7 +485,7 @@ export const StaggeredMenu = ({
         </aside>
       </div>
 
-  <style>{`
+      <style>{`
 .sm-scope .staggered-menu-wrapper { position: relative; width: 100%; height: 100%; z-index: 40; }
 .sm-scope .staggered-menu-header { position: absolute; top: 0; left: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 2em; background: transparent; pointer-events: none; z-index: 20; }
 .sm-scope .staggered-menu-header > * { pointer-events: auto; }
@@ -512,12 +494,12 @@ export const StaggeredMenu = ({
 .sm-scope .sm-logo-img { --sm-logo-h: 64px; }
 @media (min-width: 768px){ .sm-scope .sm-logo-img { --sm-logo-h: 96px; } }
 @media (min-width: 1024px){ .sm-scope .sm-logo-img { --sm-logo-h: 112px; } }
-.sm-scope .sm-toggle { color: #fff !important; }
+.sm-scope .sm-toggle { color: #ffffffff !important; }
 .sm-scope .sm-toggle-textWrap { min-width: max-content; width: auto !important; }
 .sm-scope .sm-toggle-textInner { color: inherit; opacity: 1; }
 .sm-scope .sm-toggle-line { color: inherit; opacity: 1; }
 .sm-scope .sm-toggle-line { opacity: 1; }
-.sm-scope .sm-toggle { position: relative; display: inline-flex; align-items: center; gap: 0.6rem; background: #000; color: #fff; border-radius: 9999px; padding: 0.7rem 1rem; font-size: 20px; font-weight: 700; }
+.sm-scope .sm-toggle { position: relative; display: inline-flex; align-items: center; gap: 0.6rem; background: transparent; color: inherit; border-radius: 9999px; padding: 0.35rem 0.6rem; font-size: 18px; font-weight: 400; box-shadow: none; border: none; }
 .sm-scope .sm-toggle:focus-visible { outline: 2px solid #ffffffaa; outline-offset: 4px; border-radius: 4px; }
 .sm-scope .sm-line:last-of-type { margin-top: 6px; }
 .sm-scope .sm-toggle-textWrap { position: relative; margin-right: 0.5em; display: inline-block; height: 1em; overflow: hidden; white-space: nowrap; width: var(--sm-toggle-width, auto); min-width: var(--sm-toggle-width, auto); }
@@ -527,6 +509,9 @@ export const StaggeredMenu = ({
 .sm-scope .sm-icon-line { height: 2px; }
 /* ensure header cluster layout spacing */
 .staggered-menu-header .effect { pointer-events: none; }
+/* Full-screen overlay behavior */
+.sm-scope .staggered-menu-panel { width: 100vw; max-width: 100vw; }
+.sm-scope .sm-prelayers { width: 100vw; max-width: 100vw; }
       `}</style>
     </div>
   );

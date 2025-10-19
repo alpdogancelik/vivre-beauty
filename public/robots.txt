@@ -1,0 +1,10 @@
+# robots.txt for VIVRE Beauty
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://vivrebeauty.co/sitemap.xml
+
+# Disallow admin/private routes if any
+Disallow: /api/
+Disallow: /.env

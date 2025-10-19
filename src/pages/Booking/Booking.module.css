@@ -1,1 +1,54 @@
-/* Booking scoped styles (optional). You can use Tailwind with @apply here. */
+/* Booking.module.css – scoped helpers */
+@reference "tailwindcss";
+
+:root {
+    --accent: #eab308;
+    /* amber-500 – tweak to match brand */
+}
+
+.wrapper {
+    view-transition-name: booking-page;
+}
+
+/* subtle pulse on confirm button */
+.confirmPulse {
+    animation: pulse 1.6s ease-in-out infinite;
+    animation-composition: add;
+}
+
+@keyframes pulse {
+    from {
+        box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.4);
+    }
+
+    to {
+        box-shadow: 0 0 0 12px rgba(234, 179, 8, 0);
+    }
+}
+
+/* grain overlay shared with the rest of site (if needed) */
+:global(.grain) {
+    @apply absolute inset-0 pointer-events-none mix-blend-overlay opacity-10;
+    background-image: url('/noise.png');
+    background-size: 300px 300px;
+    animation: grainShift 12s steps(10) infinite;
+}
+
+@keyframes grainShift {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(-300px, -300px);
+    }
+}
+
+/* reduce-motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .confirmPulse,
+    :global(.grain) {
+        animation: none !important;
+    }
+}

@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 
 import "./index.css"; // Tailwind directifleri
-import App from "./AppTest.jsx";
+import App from "./App.jsx";
 
 const root = createRoot(document.getElementById("root"));
 

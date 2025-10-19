@@ -1,0 +1,565 @@
+{
+  "brand": "Vivre",
+  "version": "1.0.0",
+  "generated_at": "2025-10-07T00:05:54.924334Z",
+  "currency": "TRY",
+  "categories": [
+    {
+      "key": "nails",
+      "name_tr": "Tırnak Bakımı",
+      "name_en": "Nails",
+      "subcategories": [
+        {
+          "key": "enhancements",
+          "name_tr": "Tırnak Güçlendirme & Uzatma",
+          "name_en": "Nail Enhancements",
+          "services": [
+            {
+              "id": "gel_overlay",
+              "name_tr": "Jel Güçlendirme",
+              "name_en": "Gel Overlay",
+              "duration_min": 60,
+              "base_price": 500,
+              "variants": [
+                {
+                  "id": "gel_overlay_standard",
+                  "name_tr": "Standart",
+                  "name_en": "Standard",
+                  "base_price": 500,
+                  "duration_min": 60
+                },
+                {
+                  "id": "gel_overlay_builder_biab",
+                  "name_tr": "Builder Gel / BIAB",
+                  "name_en": "Builder Gel / BIAB",
+                  "base_price": 650,
+                  "duration_min": 75
+                },
+                {
+                  "id": "structured_gel_manicure",
+                  "name_tr": "Structured Gel Manicure",
+                  "name_en": "Structured Gel Manicure",
+                  "base_price": 700,
+                  "duration_min": 80
+                }
+              ],
+              "modifiers": []
+            },
+            {
+              "id": "sculpted_forms_extension",
+              "name_tr": "Jel/Polygel Uzatma – Şekillendirme",
+              "name_en": "Sculpted Forms Extension",
+              "duration_min": 120,
+              "base_price": 800,
+              "variants": [],
+              "modifiers": [
+                {
+                  "type": "length",
+                  "name_tr": "Uzunluk",
+                  "name_en": "Length",
+                  "options": [
+                    {
+                      "id": "len_s",
+                      "name": "S",
+                      "price_delta": 0
+                    },
+                    {
+                      "id": "len_m",
+                      "name": "M",
+                      "price_delta": 100
+                    },
+                    {
+                      "id": "len_l",
+                      "name": "L",
+                      "price_delta": 200
+                    },
+                    {
+                      "id": "len_xl",
+                      "name": "XL",
+                      "price_delta": 300
+                    }
+                  ]
+                },
+                {
+                  "type": "shape",
+                  "name_tr": "Şekil",
+                  "name_en": "Shape",
+                  "options": [
+                    {
+                      "id": "shape_standard",
+                      "name": "Standard",
+                      "price_delta": 0
+                    },
+                    {
+                      "id": "shape_special",
+                      "name": "Special (Stiletto/Almond/Coffin)",
+                      "price_delta": 150
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "soft_gel_extensions",
+              "name_tr": "Soft Gel Uzatma (Full Cover)",
+              "name_en": "Soft Gel Extensions (Full Cover Tips)",
+              "duration_min": 110,
+              "base_price": 750,
+              "variants": [],
+              "modifiers": [
+                {
+                  "type": "length",
+                  "name_tr": "Uzunluk",
+                  "name_en": "Length",
+                  "options": [
+                    {
+                      "id": "len_s",
+                      "name": "S",
+                      "price_delta": 0
+                    },
+                    {
+                      "id": "len_m",
+                      "name": "M",
+                      "price_delta": 100
+                    },
+                    {
+                      "id": "len_l",
+                      "name": "L",
+                      "price_delta": 200
+                    },
+                    {
+                      "id": "len_xl",
+                      "name": "XL",
+                      "price_delta": 300
+                    }
+                  ]
+                },
+                {
+                  "type": "shape",
+                  "name_tr": "Şekil",
+                  "name_en": "Shape",
+                  "options": [
+                    {
+                      "id": "shape_standard",
+                      "name": "Standard",
+                      "price_delta": 0
+                    },
+                    {
+                      "id": "shape_special",
+                      "name": "Special (Stiletto/Almond/Coffin)",
+                      "price_delta": 150
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "refill",
+              "name_tr": "Bakım & Dolgu",
+              "name_en": "Refill",
+              "duration_min": 90,
+              "base_price": 400,
+              "applies_to": [
+                "gel_overlay",
+                "sculpted_forms_extension",
+                "soft_gel_extensions"
+              ],
+              "variants": [],
+              "modifiers": [
+                {
+                  "type": "length",
+                  "name_tr": "Uzunluk",
+                  "name_en": "Length",
+                  "options": [
+                    {
+                      "id": "len_s",
+                      "name": "S",
+                      "price_delta": 0
+                    },
+                    {
+                      "id": "len_m",
+                      "name": "M",
+                      "price_delta": 50
+                    },
+                    {
+                      "id": "len_l",
+                      "name": "L",
+                      "price_delta": 100
+                    },
+                    {
+                      "id": "len_xl",
+                      "name": "XL",
+                      "price_delta": 150
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "removal",
+              "name_tr": "Çıkartma",
+              "name_en": "Removal",
+              "duration_min": 30,
+              "base_price": 150,
+              "variants": [
+                {
+                  "id": "removal_vivre",
+                  "name_tr": "Vivre İşlemi",
+                  "name_en": "Vivre Work",
+                  "base_price": 150,
+                  "duration_min": 30
+                },
+                {
+                  "id": "removal_other",
+                  "name_tr": "Başka Salon",
+                  "name_en": "Other Salon",
+                  "base_price": 250,
+                  "duration_min": 45
+                }
+              ],
+              "modifiers": []
+            },
+            {
+              "id": "single_nail_repair",
+              "name_tr": "Onarım (Tek Tırnak)",
+              "name_en": "Single-Nail Repair",
+              "duration_min": 20,
+              "base_price": 100,
+              "variants": [],
+              "modifiers": []
+            }
+          ]
+        },
+        {
+          "key": "gel_polish_and_nail_art",
+          "name_tr": "Kalıcı Oje & Nail Art",
+          "name_en": "Gel Polish & Nail Art",
+          "services": [
+            {
+              "id": "gel_polish_hands",
+              "name_tr": "Kalıcı Oje (El)",
+              "name_en": "Gel Polish (Hands)",
+              "duration_min": 45,
+              "base_price": 300,
+              "variants": [],
+              "modifiers": [
+                {
+                  "type": "finish",
+                  "name_tr": "Finish",
+                  "name_en": "Finish",
+                  "options": [
+                    {
+                      "id": "finish_standard",
+                      "name": "Standard Color",
+                      "price_delta": 0
+                    },
+                    {
+                      "id": "finish_french",
+                      "name": "French",
+                      "price_delta": 100
+                    },
+                    {
+                      "id": "finish_ombre",
+                      "name": "Ombre",
+                      "price_delta": 150
+                    },
+                    {
+                      "id": "finish_cat_eye",
+                      "name": "Cat-Eye",
+                      "price_delta": 100
+                    },
+                    {
+                      "id": "finish_chrome",
+                      "name": "Chrome",
+                      "price_delta": 200
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "gel_polish_feet",
+              "name_tr": "Kalıcı Oje (Ayak)",
+              "name_en": "Gel Polish (Feet)",
+              "duration_min": 50,
+              "base_price": 350,
+              "variants": [],
+              "modifiers": [
+                {
+                  "type": "finish",
+                  "name_tr": "Finish",
+                  "name_en": "Finish",
+                  "options": [
+                    {
+                      "id": "finish_standard",
+                      "name": "Standard Color",
+                      "price_delta": 0
+                    },
+                    {
+                      "id": "finish_french",
+                      "name": "French",
+                      "price_delta": 100
+                    },
+                    {
+                      "id": "finish_ombre",
+                      "name": "Ombre",
+                      "price_delta": 150
+                    },
+                    {
+                      "id": "finish_cat_eye",
+                      "name": "Cat-Eye",
+                      "price_delta": 100
+                    },
+                    {
+                      "id": "finish_chrome",
+                      "name": "Chrome",
+                      "price_delta": 200
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "nail_art",
+              "name_tr": "Nail Art",
+              "name_en": "Nail Art",
+              "duration_min": 30,
+              "base_price": 0,
+              "variants": [
+                {
+                  "id": "art_basic",
+                  "name_tr": "Seviye 1 (Basic)",
+                  "name_en": "Level 1 (Basic)",
+                  "price_delta": 150,
+                  "duration_min": 30
+                },
+                {
+                  "id": "art_level2",
+                  "name_tr": "Seviye 2",
+                  "name_en": "Level 2",
+                  "price_delta": 250,
+                  "duration_min": 45
+                },
+                {
+                  "id": "art_level3",
+                  "name_tr": "Seviye 3",
+                  "name_en": "Level 3",
+                  "price_delta": 350,
+                  "duration_min": 60
+                },
+                {
+                  "id": "art_level4",
+                  "name_tr": "Seviye 4 (Advanced)",
+                  "name_en": "Level 4 (Advanced)",
+                  "price_delta": 500,
+                  "duration_min": 90
+                }
+              ],
+              "modifiers": [
+                {
+                  "type": "coverage",
+                  "name_tr": "Kapsam",
+                  "name_en": "Coverage",
+                  "options": [
+                    {
+                      "id": "art_single",
+                      "name_tr": "Tek Tırnak",
+                      "name_en": "Single Nail",
+                      "price_delta": 0
+                    },
+                    {
+                      "id": "art_full_set",
+                      "name_tr": "Full Set",
+                      "name_en": "Full Set",
+                      "price_delta": 300
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "haircare",
+      "name_tr": "Saç Bakımı",
+      "name_en": "Hair Care",
+      "subcategories": [
+        {
+          "key": "treatments",
+          "name_tr": "Saç Bakım Uygulamaları",
+          "name_en": "Hair Treatments",
+          "services": [
+            {
+              "id": "keratin-bakim",
+              "name_tr": "Keratin Bakım (Formaldehitsiz)",
+              "name_en": "Keratin Treatment (Formaldehyde-Free)",
+              "duration_min": 90,
+              "base_price": 0,
+              "variants": [],
+              "modifiers": [
+                {
+                  "type": "length_tier",
+                  "name_tr": "Saç Uzunluğu",
+                  "name_en": "Hair Length",
+                  "options": [
+                    { "id": "len_s", "name": "S", "price_delta": 0, "duration_add": 0 },
+                    { "id": "len_m", "name": "M", "price_delta": 0, "duration_add": 30 },
+                    { "id": "len_l", "name": "L", "price_delta": 0, "duration_add": 60 },
+                    { "id": "len_xl", "name": "XL", "price_delta": 0, "duration_add": 90 }
+                  ]
+                }
+              ],
+              "add_ons": ["uc-kesim", "bond-shot", "isi-kalkani", "nem-muhru", "metal-arindirma", "parlatici-serum"],
+              "notes": "Uygulama akışı: arındırıcı yıkama → ürün uygulama → ısı aktivasyonu → fön/ütü."
+            },
+            {
+              "id": "bag-guclendirme",
+              "name_tr": "Bağ Güçlendirme Bakımı",
+              "name_en": "Bond Strengthening Treatment",
+              "duration_min": 45,
+              "base_price": 0,
+              "variants": [
+                { "id": "bond_45", "name_tr": "45 dk", "name_en": "45 min", "base_price": 0, "duration_min": 45 },
+                { "id": "bond_60", "name_tr": "60 dk", "name_en": "60 min", "base_price": 0, "duration_min": 60 },
+                { "id": "bond_75", "name_tr": "75 dk", "name_en": "75 min", "base_price": 0, "duration_min": 75 }
+              ],
+              "modifiers": [],
+              "add_ons": ["nem-maskesi", "isi-kalkani", "nem-muhru"]
+            },
+            {
+              "id": "sac-botoksu-kolajen",
+              "name_tr": "Saç Botoksu / Kolajen Bakımı",
+              "name_en": "Hair Botox / Collagen Treatment",
+              "duration_min": 60,
+              "base_price": 0,
+              "variants": [
+                { "id": "botox_60", "name_tr": "60 dk", "name_en": "60 min", "base_price": 0, "duration_min": 60 },
+                { "id": "botox_75", "name_tr": "75 dk", "name_en": "75 min", "base_price": 0, "duration_min": 75 },
+                { "id": "botox_90", "name_tr": "90 dk", "name_en": "90 min", "base_price": 0, "duration_min": 90 }
+              ],
+              "modifiers": [],
+              "add_ons": ["uc-kesim", "nem-muhru", "parlatici-serum"]
+            },
+            {
+              "id": "sac-derisi-detoksu",
+              "name_tr": "Saç Derisi Detoksu",
+              "name_en": "Scalp Detox",
+              "duration_min": 30,
+              "base_price": 0,
+              "variants": [
+                { "id": "detox_30", "name_tr": "30 dk", "name_en": "30 min", "base_price": 0, "duration_min": 30 },
+                { "id": "detox_45", "name_tr": "45 dk", "name_en": "45 min", "base_price": 0, "duration_min": 45 },
+                { "id": "detox_60", "name_tr": "60 dk", "name_en": "60 min", "base_price": 0, "duration_min": 60 }
+              ],
+              "modifiers": [],
+              "add_ons": ["nem-maskesi", "sac-derisi-tonik", "parlatici-serum"]
+            },
+            {
+              "id": "nem-yukleme-seremonisi",
+              "name_tr": "Nem Yükleme Maske Seremonisi",
+              "name_en": "Moisture Loading Mask Ceremony",
+              "duration_min": 20,
+              "base_price": 0,
+              "variants": [
+                { "id": "moisture_20", "name_tr": "20 dk", "name_en": "20 min", "base_price": 0, "duration_min": 20 },
+                { "id": "moisture_30", "name_tr": "30 dk", "name_en": "30 min", "base_price": 0, "duration_min": 30 }
+              ],
+              "modifiers": [],
+              "add_ons": ["isi-ile-aktif-nem", "nem-muhru", "parlatici-serum"]
+            },
+            {
+              "id": "fon-sekillendirme",
+              "name_tr": "Fön & Şekillendirme",
+              "name_en": "Blow-Dry & Styling",
+              "duration_min": 25,
+              "base_price": 0,
+              "variants": [],
+              "modifiers": [
+                {
+                  "type": "length_tier",
+                  "name_tr": "Saç Uzunluğu",
+                  "name_en": "Hair Length",
+                  "options": [
+                    { "id": "len_s", "name": "S", "price_delta": 0, "duration_add": 0 },
+                    { "id": "len_m", "name": "M", "price_delta": 0, "duration_add": 10 },
+                    { "id": "len_l", "name": "L", "price_delta": 0, "duration_add": 20 },
+                    { "id": "len_xl", "name": "XL", "price_delta": 0, "duration_add": 30 }
+                  ]
+                }
+              ],
+              "add_ons": ["isi-kalkani", "parlatici-serum"]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "add_ons": [
+    {
+      "id": "uc-kesim",
+      "name_tr": "Uç Kesim (Toz Alma)",
+      "name_en": "Trim (Dusting)",
+      "duration_add": 10,
+      "price_add": 0
+    },
+    {
+      "id": "bond-shot",
+      "name_tr": "Bağ Güçlendirme (Bond Shot)",
+      "name_en": "Bond Shot",
+      "duration_add": 10,
+      "price_add": 0
+    },
+    {
+      "id": "isi-kalkani",
+      "name_tr": "Isı Kalkanı",
+      "name_en": "Heat Shield",
+      "duration_add": 0,
+      "price_add": 0
+    },
+    {
+      "id": "nem-muhru",
+      "name_tr": "Nem Mührü",
+      "name_en": "Moisture Seal",
+      "duration_add": 3,
+      "price_add": 0
+    },
+    {
+      "id": "metal-arindirma",
+      "name_tr": "Metal Arındırma",
+      "name_en": "Metal Detox",
+      "duration_add": 10,
+      "price_add": 0
+    },
+    {
+      "id": "nem-maskesi",
+      "name_tr": "Nem Maskesi",
+      "name_en": "Moisture Mask",
+      "duration_add": 10,
+      "price_add": 0
+    },
+    {
+      "id": "isi-ile-aktif-nem",
+      "name_tr": "Isı ile Aktif Nem",
+      "name_en": "Heat-Activated Moisture",
+      "duration_add": 7,
+      "price_add": 0
+    },
+    {
+      "id": "sac-derisi-tonik",
+      "name_tr": "Saç Derisi Sakinleştirici Tonik",
+      "name_en": "Scalp Soothing Tonic",
+      "duration_add": 0,
+      "price_add": 0
+    },
+    {
+      "id": "parlatici-serum",
+      "name_tr": "Parlatıcı Serum",
+      "name_en": "Shine Serum",
+      "duration_add": 0,
+      "price_add": 0
+    }
+  ],
+  "pricing_rules_note": "Tüm fiyatlar TRY olarak belirtilmiştir. 'price_delta' ve 'base_price' değerleri dinamik olarak toplanır."
+}

@@ -1,0 +1,1 @@
+Put your homepage portrait image here as model.jpg (or update path in SpotlightHero props). For best results, use a 3:4 portrait with a dark background and at least 1600px height.
