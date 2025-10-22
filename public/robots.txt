@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://vivrebeauty.co/sitemap.xml
+Sitemap: https://thevivre.co/sitemap.xml
 
 # Disallow admin/private routes if any
 Disallow: /api/
