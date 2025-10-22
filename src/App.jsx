@@ -10,6 +10,7 @@ import StaggeredMenu from "@features/StaggeredMenu/StaggeredMenu.jsx";
 import { AnimatePresence, motion } from 'framer-motion';
 // import Hero from "@pages/Hero/Hero.jsx"; // removed usage
 import SpotlightHero from "@/features/SpotlightHero/SpotlightHero.jsx";
+import ScrollReveal from "@/components/ScrollReveal.jsx";
 import BottomRiseNav from "@/features/BottomRiseNav/BottomRiseNav.jsx";
 import Sidebar from "@features/Sidebar/Sidebar.jsx";
 import FeatureCard from "@features/FeatureCard/FeatureCard.jsx";
@@ -22,6 +23,9 @@ import { gsap } from "gsap";
 import { SECTIONS as RAW_SECTIONS, NAV_ITEMS as CONST_NAV_ITEMS } from "./constants/sections.jsx";
 import { PROJECTS as RAW_PROJECTS } from "./constants/projects.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
+import EntryLoader from "./components/EntryLoader.jsx";
+import SaberScrollbar from "@/components/SaberScrollbar.jsx";
+import PerfProbe from "@/components/PerfProbe.jsx";
 // import { useIntersection } from "./lib/useIntersection.js";
 import { shouldUseWebGL } from "./lib/detectWebGL.js";
 import { useReducedMotion } from "./lib/useReducedMotion.js";
@@ -133,6 +137,15 @@ export default function App() {
   // const [showLanding, setShowLanding] = useState(false); // removed
   // const [showLogo, setShowLogo] = useState(false); // removed
   const [route, setRoute] = useState(() => (typeof window !== 'undefined' ? window.location.pathname : '/'));
+  const [showEntryLoader, setShowEntryLoader] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    try {
+      const once = sessionStorage.getItem('vivre_entry_loader_shown') === '1';
+      return !once && (window.location.pathname === '/' || window.location.pathname === '/home');
+    } catch {
+      return window.location.pathname === '/' || window.location.pathname === '/home';
+    }
+  });
   const [navOpen, setNavOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -212,6 +225,13 @@ export default function App() {
     setRoute(to);
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
+
+  // Mark loader as shown to avoid re-showing within the same session
+  useEffect(() => {
+    if (showEntryLoader && typeof window !== 'undefined') {
+      try { sessionStorage.setItem('vivre_entry_loader_shown', '1'); } catch { }
+    }
+  }, [showEntryLoader]);
 
   // Global Contact/Booking click handler (smooth scroll if #contact exists)
   const handleGlobalContactClick = useCallback((e) => {
@@ -323,7 +343,7 @@ export default function App() {
         <motion.div key="contact-page" initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -24 }} transition={{ duration: 0.55, ease: 'easeOut' }} className="min-h-screen bg-transparent text-white relative">
           {/* Galaxy background (CONTACT) */}
           {webglSupport.ok && !prefersReducedMotion && (
-            <div className="fixed inset-0 -z-10 pointer-events-none bg-[#fffff]" aria-hidden>
+            <div className="fixed inset-0 -z-10 pointer-events-none bg-[#0b0912]" aria-hidden>
               <Suspense fallback={null}>
                 <Galaxy
                   mouseInteraction={false}
@@ -388,6 +408,14 @@ export default function App() {
   return (
     <ErrorBoundary>
       <div className="bg-transparent text-white min-h-screen relative">
+        {/* Debug probe: enable with ?perf=1 */}
+        <PerfProbe sectionId="cosmetics" />
+        {/* Entry Loader (Home only) */}
+        {showEntryLoader && route === '/' && (
+          <EntryLoader durationMs={8000} onDone={() => setShowEntryLoader(false)} />
+        )}
+        {/* Custom thin scrollbar across top */}
+        <SaberScrollbar hideNative={true} height={10} zIndex={70} />
         {/* Global StaggeredMenu overlay with menu button */}
         <div className="fixed inset-0 z-[60] pointer-events-none">
           <StaggeredMenu
@@ -406,27 +434,35 @@ export default function App() {
             logoUrl="/vivre-logo.png"
           />
         </div>
-        {/* Spotlight intro section (mouse-follow light over portrait) */}
-        {!hideHero && (
-          <div style={{ opacity: heroOpacity, transition: 'opacity 240ms ease' }}>
-            <SpotlightHero
-              src="/model2.png"
-              alt="Vivre Beauty"
-              strength={0.45}
-              size={24}
-              align="right"
-              showContent={true}
-              eyebrow="VIVRE"
-              heading="Yeniden başlamanın en doğal yolu."
-              description="Vivre, yeniden başlamak isteyenler için doğal merkezine alan, insan sağlığını önceleyen bir bakım yaklaşımı sunar. Gereksiz kimyasal yükten arındırılmış protokollerimiz, bağımsız test ve şeffaf içerik politikasıyla desteklenir. Daha az işlemle, ölçülebilir ve sürdürülebilir sonuçlar hedefler; cildi yormadan iyi oluşa dönmeyi kolaylaştırır."
-              className="[--img-right:1]"
-            />
-          </div>
-        )}
+        {/* Spotlight intro section (mouse-follow light over portrait)
+            CLS önleme: DOM'dan kaldırmak yerine görünürlüğünü gizle. */}
+        <div
+          style={{
+            opacity: heroOpacity,
+            transition: 'opacity 240ms ease',
+            visibility: hideHero ? 'hidden' : 'visible',
+            pointerEvents: hideHero ? 'none' : 'auto',
+          }}
+          aria-hidden={hideHero ? 'true' : undefined}
+        >
+          <SpotlightHero
+            src="/model2.png"
+            alt="Vivre Beauty"
+            strength={0.45}
+            size={24}
+            align="right"
+            interactiveLight={false}
+            showContent={true}
+            eyebrow="VIVRE"
+            heading="Yeniden başlamanın en doğal yolu."
+            description="Vivre, yeniden başlamak isteyenler için doğalı merkezine alan, insan sağlığını önceleyen bir bakım yaklaşımı sunar. Gereksiz kimyasal yükten arındırılmış protokollerimiz, bağımsız test ve şeffaf içerik politikasıyla desteklenir. Daha az işlemle, ölçülebilir ve sürdürülebilir sonuçlar hedefler; cildi yormadan iyi oluşa dönmeyi kolaylaştırır."
+            className="[--img-right:1]"
+          />
+        </div>
         {/* Legacy GooeyNav removed */}
         {/* Global Iridescence background disabled */}
         {/* Galaxy background (HOME) */}
-        {webglSupport.ok && !prefersReducedMotion && (
+        {webglSupport.ok && !prefersReducedMotion && route === '/' && (
           <div className="fixed inset-0 -z-10 pointer-events-none bg-[#0b0912]" aria-hidden>
             <Suspense fallback={null}>
               <Galaxy
@@ -562,18 +598,32 @@ export default function App() {
             }}
             onReservation={() => document.getElementById('reservation')?.scrollIntoView({ behavior: 'smooth' })}
           />
-          <BottomRiseNav
-            show={showBottomNav}
-            items={SECTIONS.map(s => ({ id: s.id, label: s.title }))}
-            onNavigate={(id) => {
-              if (id === 'reservation') {
-                document.getElementById('reservation')?.scrollIntoView({ behavior: 'smooth' });
-              } else {
-                document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-            onReservation={() => document.getElementById('reservation')?.scrollIntoView({ behavior: 'smooth' })}
-          />
+
+          {/* Interstitial manifesto section (full-bleed text) */}
+          <section id="manifesto" className="relative min-h-[92svh]">
+            <div className="max-w-7xl mx-auto px-6 md:px-10 py-24 md:py-32 relative z-10">
+              <ScrollReveal
+                enableBlur={true}
+                baseOpacity={0.35}
+                baseRotation={0}
+                blurStrength={7}
+                rotationEnd="bottom bottom"
+                wordAnimationEnd="bottom bottom"
+                containerClassName=""
+                textClassName="text-white/85 font-light tracking-tight leading-relaxed md:leading-[1.8]"
+              >{`Vivre’de her şey basit bir soruyla başlar:
+
+“Gerçekten gerekli mi?”
+
+Gereksiz kimyasal yükü ve karmaşık protokolleri eliyoruz.
+
+Şeffaf içerikler, nazik uygulamalar ve ölçülebilir sonuçlarla iyi oluşu sadeleştiriyoruz.
+
+Çünkü iyi hissetmek, fazlasıyla değil; doğru olanla mümkün.
+
+Vivre, cildi yormadan, güvenle ve netlikle yeniden başlamanın en doğal yolunu sunar.`}</ScrollReveal>
+            </div>
+          </section>
           {/* Standalone Hero section removed to avoid duplicate hero between Home and Cosmetics */}
 
           {SECTIONS.map((s) => {
@@ -595,7 +645,7 @@ export default function App() {
                 */}
 
                 <div
-                  className={`max-w-6xl mx-auto px-6 py-16 md:py-24 relative z-10 transition-all duration-500 ${active === s.id ? "opacity-100 translate-x-0" : "opacity-60 translate-x-2"}`}
+                  className={`max-w-6xl mx-auto px-6 py-16 md:py-24 relative z-10 transition-opacity duration-500 ${active === s.id ? "opacity-100" : "opacity-60"}`}
                 >
                   <div className="flex items-baseline gap-4">
                     <span className="text-xs tabular-nums text-stone-500">{s.no}</span>

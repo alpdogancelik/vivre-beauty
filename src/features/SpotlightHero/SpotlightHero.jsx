@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import VivreMetallic from "@features/MetallicPaint/VivreMetallic.jsx";
+import TextType from "@/components/TextType.jsx";
 
 /**
  * SpotlightHero — mouse-follow spotlight over a portrait image.
@@ -22,6 +23,7 @@ export default function SpotlightHero({
     align = 'right', // 'right' | 'center'
     showContent = true,
     showMetallic = true,
+    interactiveLight = true,
     eyebrow = 'VIVRE',
     heading = 'Yeniden başlamanın en doğal yolu.',
     description = 'Vivre, yeniden başlamak isteyenler için doğal merkezine alan, insan sağlığını önceleyen bir bakım yaklaşımı sunar. Gereksiz kimyasal yükten arındırılmış protokollerimiz, bağımsız test ve şeffaf içerik politikasıyla desteklenir. Daha az işlemle, ölçülebilir ve sürdürülebilir sonuçlar hedefler; cildi yormadan iyi oluşa dönmeyi kolaylaştırır.',
@@ -34,6 +36,7 @@ export default function SpotlightHero({
     const lastPointer = useRef({ x: 0, y: 0 });
 
     useEffect(() => {
+        if (!interactiveLight) return; // spotlight kapalıysa hiçbir listener ekleme
         const el = rootRef.current;
         if (!el) return;
 
@@ -100,7 +103,7 @@ export default function SpotlightHero({
             el.removeEventListener("touchstart", onMove);
             el.removeEventListener("touchmove", onMove);
         };
-    }, [size, strength]);
+    }, [size, strength, interactiveLight]);
 
     const onImgError = (e) => {
         // graceful fallback if the portrait isn't available yet
@@ -119,17 +122,40 @@ export default function SpotlightHero({
             className={`spotlight-hero relative isolate h-[100svh] w-full overflow-hidden bg-transparent ${className}`}
             aria-label="Interactive spotlight"
         >
+            {/* Global ultra-thin glass veneer over the hero (very subtle) */}
+            <div
+                aria-hidden
+                className="pointer-events-none absolute inset-4 md:inset-6 -z-10 rounded-[28px] bg-white/7 border border-white/10 backdrop-blur-[3px] backdrop-saturate-150 shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_20px_60px_-40px_rgba(255,255,255,0.35)]"
+            />
             {/* Left content (text) */}
             {showContent && (
                 <div className="absolute inset-y-0 left-0 z-20 flex items-center">
-                    <div className="px-6 md:px-12 max-w-xl text-left space-y-5">
+                    <div className="relative px-6 md:px-12 py-6 max-w-[760px] text-left space-y-5">
                         <div className="uppercase tracking-[0.45em] text-[10px] md:text-xs text-white/70">{eyebrow}</div>
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] leading-tight font-light text-white">
-                            {heading}
-                        </h1>
-                        <p className="text-sm md:text-base lg:text-lg leading-relaxed text-white/80">
-                            {description}
-                        </p>
+                        <TextType
+                            as="h1"
+                            className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] leading-tight font-light text-white"
+                            text={heading}
+                            typingSpeed={60}
+                            deletingSpeed={60}
+                            pauseDuration={1500}
+                            cursorBlinkDuration={0.5}
+                            showCursor={false}
+                            cursorCharacter="|"
+                            loop={false}
+                        />
+                        <TextType
+                            as="p"
+                            className="text-sm md:text-base lg:text-lg leading-relaxed text-white/80"
+                            text={description}
+                            typingSpeed={60}
+                            deletingSpeed={60}
+                            pauseDuration={1500}
+                            cursorBlinkDuration={0.5}
+                            showCursor={false}
+                            cursorCharacter="|"
+                            loop={false}
+                        />
                     </div>
                 </div>
             )}
@@ -138,11 +164,12 @@ export default function SpotlightHero({
                 src={src}
                 alt={alt}
                 onError={onImgError}
-                className={`spotlit-img pointer-events-none select-none absolute ${align === 'right'
+                className={`spotlit-img pointer-events-none select-none absolute z-10 ${align === 'right'
                     ? 'top-1/2 -translate-y-1/2 right-0 h-full w-auto object-contain'
                     : 'inset-0 m-auto h-full w-auto object-contain'
                     }`}
                 ref={imgRef}
+                style={!interactiveLight ? { filter: 'none' } : undefined}
                 draggable={false}
             />
 
@@ -153,10 +180,14 @@ export default function SpotlightHero({
                 </div>
             )}
 
-            <div className="spotlight-layer pointer-events-none absolute inset-0" />
-            {/* Elliptical, regional light (subtle) */}
-            <div className="light-ellipse pointer-events-none absolute" aria-hidden />
-            <div className="lamp-dot pointer-events-none absolute" aria-hidden />
+            {interactiveLight && (
+                <>
+                    <div className="spotlight-layer pointer-events-none absolute inset-0" />
+                    {/* Elliptical, regional light (subtle) */}
+                    <div className="light-ellipse pointer-events-none absolute" aria-hidden />
+                    <div className="lamp-dot pointer-events-none absolute" aria-hidden />
+                </>
+            )}
         </section>
     );
 }

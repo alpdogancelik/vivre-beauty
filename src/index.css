@@ -830,3 +830,136 @@ body.shiny-all .shiny-text {
 .glass-scroll::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+/* --- IŞIN KILICI PROGRESS BAR --- */
+.saber-scrollbar {
+  position: fixed;
+  inset: 0 auto auto 0;
+  /* top */
+  height: 8px;
+  width: 100%;
+  pointer-events: auto;
+  z-index: 60;
+  /* Üste sabit; koyu arkaplanlarda da “ışık” etkisi versin */
+  mix-blend-mode: screen;
+}
+
+.saber-track {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, .06), transparent);
+  backdrop-filter: blur(2px);
+}
+
+/* Scrolled portion highlight (trail) */
+.saber-trail {
+  position: absolute;
+  left: 0;
+  top: 1px;
+  height: calc(100% - 2px);
+  width: calc(var(--progress, 0) * 100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02));
+  border-radius: 9999px;
+}
+
+.saber-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  /* GLOW + blade core */
+  background:
+    radial-gradient(20px 12px at calc(100% - 12px) 50%, rgba(255, 255, 255, .9), rgba(255, 255, 255, 0) 60%),
+    linear-gradient(90deg, rgba(255, 255, 255, .95), rgba(255, 255, 255, .6));
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, .65)) drop-shadow(0 0 22px rgba(255, 255, 255, .35));
+  transform-origin: left center;
+  transform: scaleX(var(--progress, 0));
+}
+
+/* Kenarlarda hafif aura */
+.saber-fill::after {
+  content: "";
+  position: absolute;
+  inset: -6px 0;
+  background: linear-gradient(90deg, rgba(255, 209, 220, .45), rgba(255, 255, 255, .35), rgba(255, 209, 220, .45));
+  filter: blur(8px);
+  opacity: .9;
+}
+
+/* Hareketli “şerit” efekti */
+.saber-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg,
+      rgba(255, 255, 255, .0) 0 18px, rgba(255, 255, 255, .25) 18px 22px, rgba(255, 255, 255, 0) 22px 40px);
+  animation: saberShimmer 1.6s linear infinite;
+  mix-blend-mode: screen;
+  opacity: .55;
+}
+
+@keyframes saberShimmer {
+  to {
+    transform: translateX(40px);
+  }
+}
+
+/* Uç “emitter” düğmesi (drag hedefi) */
+.saber-head {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  left: calc(var(--progress, 0) * 100%);
+  width: 38px;
+  height: 3px;
+  border-radius: 9999px;
+  /* slimmer ellipse */
+  background:
+    radial-gradient(14px 7px at 60% 50%, rgba(255, 255, 255, .9), rgba(255, 255, 255, 0) 60%),
+    linear-gradient(90deg, rgba(255, 255, 255, .95), rgba(255, 255, 255, .5));
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, .7),
+    0 0 18px rgba(255, 255, 255, .32);
+  transform: translateX(-50%);
+}
+
+/* Erişilebilirlik: hareket azalt */
+@media (prefers-reduced-motion: reduce) {
+  .saber-fill::before {
+    animation: none;
+  }
+}
+
+/* --- İsteğe bağlı: native scrollbar’ı incelt/gizle --- */
+/* Firefox: */
+html {
+  scrollbar-width: thin;
+}
+
+/* incelt */
+html.hide-native-scrollbar {
+  scrollbar-width: none;
+}
+
+/* tamamen gizle */
+/* WebKit (non-standard) – Chrome/Safari: */
+html.hide-native-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* gizle */
+/* Renk vererek ince bir görünüm de tercih edebilirsin */
+html::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, .25);
+  border-radius: 6px;
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
