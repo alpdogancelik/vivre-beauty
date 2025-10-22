@@ -6,14 +6,14 @@ import TextType from "@/components/TextType.jsx";
  * SpotlightHero — mouse-follow spotlight over a portrait image.
  *
  * Props:
- * - src: image URL (public path). Default: "/images/hero/model.jpg"
+ * - src: image URL (public path). Default: "/model2.png" (exists under public/)
  * - alt: alt text
  * - strength: 0.6–1.6 recommended
  * - size: spotlight diameter in vmin (e.g. 40–60)
  * - className: extra classes for root container
  */
 export default function SpotlightHero({
-    src = "/images/hero/model2.png",
+    src = "/model2.png",
     alt = "Vivre Beauty",
     strength = 0.5,
     size = 28,
@@ -120,6 +120,12 @@ export default function SpotlightHero({
         <section
             ref={rootRef}
             className={`spotlight-hero relative isolate h-[100svh] w-full overflow-hidden bg-transparent ${className}`}
+            style={{
+                backgroundImage: "url('/model2.png')",
+                backgroundSize: 'cover',
+                backgroundPosition: align === 'right' ? 'right center' : 'center',
+                backgroundRepeat: 'no-repeat'
+            }}
             aria-label="Interactive spotlight"
         >
             {/* Global ultra-thin glass veneer over the hero (very subtle) */}

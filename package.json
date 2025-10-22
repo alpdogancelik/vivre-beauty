@@ -9,7 +9,11 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "dev:api": "node server/index.js",
-    "dev:all": "concurrently \"npm:dev\" \"npm:dev:api\""
+    "dev:all": "concurrently \"npm:dev\" \"npm:dev:api\"",
+    "cf:login": "wrangler login",
+    "cf:deploy": "wrangler pages deploy dist",
+    "cf:dev": "wrangler pages dev dist",
+    "cf:project": "wrangler pages project create vivre-beauty --production-branch main"
   },
   "dependencies": {
     "@mediapipe/camera_utils": "^0.3.1675466862",
@@ -55,6 +59,7 @@
     "globals": "^16.3.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.13",
-    "vite": "^7.1.2"
+    "vite": "^7.1.2",
+    "wrangler": "^3.92.0"
   }
 }
