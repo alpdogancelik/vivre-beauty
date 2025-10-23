@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import VivreMetallic from "@features/MetallicPaint/VivreMetallic.jsx";
 import TextType from "@/components/TextType.jsx";
 
@@ -105,27 +105,32 @@ export default function SpotlightHero({
         };
     }, [size, strength, interactiveLight]);
 
-    const onImgError = (e) => {
-        // graceful fallback if the portrait isn't available yet
-        if (e?.target) {
-            const current = e.target.src || "";
-            // Avoid infinite loop by checking if already tried fallback
-            if (!current.includes("model2.png")) {
-                e.target.src = "/model2.png"; // existing asset in public/
-            }
-        }
+    // removed: old onImgError that swapped src; replaced below with conditional background fallback
+
+    const [bgUrl, setBgUrl] = useState(null);
+    const [hideImg, setHideImg] = useState(false);
+
+    const onImgError = () => {
+        // If image fails (slow Android, blocked, etc.), fall back to CSS background and hide <img>
+        setHideImg(true);
+        setBgUrl('/model2.png');
+    };
+
+    const onImgLoad = () => {
+        setHideImg(false);
+        setBgUrl(null);
     };
 
     return (
         <section
             ref={rootRef}
             className={`spotlight-hero relative isolate h-[100svh] w-full overflow-hidden bg-transparent ${className}`}
-            style={{
-                backgroundImage: "url('/model2.png')",
+            style={bgUrl ? {
+                backgroundImage: `url('${bgUrl}')`,
                 backgroundSize: 'cover',
                 backgroundPosition: align === 'right' ? 'right center' : 'center',
                 backgroundRepeat: 'no-repeat'
-            }}
+            } : undefined}
             aria-label="Interactive spotlight"
         >
             {/* Global ultra-thin glass veneer over the hero (very subtle) */}
@@ -166,10 +171,12 @@ export default function SpotlightHero({
                 </div>
             )}
 
+            {!hideImg && (
             <img
                 src={src}
                 alt={alt}
                 onError={onImgError}
+                onLoad={onImgLoad}
                 className={`spotlit-img pointer-events-none select-none absolute z-10 ${align === 'right'
                     ? 'top-1/2 -translate-y-1/2 right-0 h-full w-auto object-contain'
                     : 'inset-0 m-auto h-full w-auto object-contain'
@@ -177,7 +184,10 @@ export default function SpotlightHero({
                 ref={imgRef}
                 style={!interactiveLight ? { filter: 'none' } : undefined}
                 draggable={false}
+                loading="eager"
+                fetchpriority="high"
             />
+            )}
 
             {/* Metallic Vivre logo near the model */}
             {showMetallic && (
